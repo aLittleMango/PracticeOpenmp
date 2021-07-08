@@ -3,8 +3,8 @@
  * @Description: 线程创建:并行区域 
  * @Author: aLittleMango
  * @Date: 2021-07-08 11:02:55
- * @LastEditTime: 2021-07-08 17:24:51
- * @FilePath: \Openmp\parallelComputer\paralleltest.c
+ * @LastEditTime: 2021-07-08 20:40:11
+ * @FilePath: \PracticeOpenmp\parallelComputer\paralleltest.c
  */
 
 #include <omp.h>
@@ -16,13 +16,15 @@
 int main()
 {
     int ID, nthrds;
-    omp_set_num_threads(6);
+    omp_set_dynamic(1);//启动动态分配线程数
+    omp_set_num_threads(6); //设置线程数为6个
 
-#pragma omp parallel
+//fork一组线程，给每个线程自己独立的变量拷贝
+#pragma omp parallel private(ID)
     {
-        //返回线程ID的运行时函数
-        ID = omp_get_thread_num();
 
+        //获取然后打印线程id
+        ID = omp_get_thread_num();
         printf("hello from thread = %d\n", ID);
 
         if (ID == 0)
